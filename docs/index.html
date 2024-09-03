@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f2eeee;
+      margin: 0;
+      padding: 0;
+    }
+    h1, h2, h3 {
+      text-align: center;
+    }
+    .center-content {
+      text-align: center;
+    }
+    .author-block, .link-buttons, p {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+      font-size: 20px;
+    }
+    p {
+      text-align: justify;
+    }
+    figure {
+      text-align: center;
+      font-size: 20px;
+      margin: auto;
+    }
+    .author-block a, .link-buttons a {
+      text-decoration: none;
+      color: black;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      margin: 5px;
+    }
+    .button-logo {
+      height: 30px;
+      width: auto;
+      margin-right: 10px;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 20px auto;
+    }
+    .custom-p {
+      background-color: black;
+      color: white;
+      padding: 20px;
+    }
+    .content {
+      text-align: center; 
+    }
+    .content figure, .content ul {
+      display: inline-block;
+      width: 50%;
+      vertical-align: top;
+      text-align: left;
+    }
+    .url-link {
+      color: blue; /* ここで好きな色を指定 */
+    }
+  </style>
+</head>
+<body>
+  <h1>Open-vocabulary Temporal Action Localization using VLMs</h1>
+  <div class="author-block">
+    <a target="_blank" href="https://www.microsoft.com/en-us/research/people/nawake/" style="color: blue;">Naoki Wake</a>,
+    <a target="_blank" href="#">Atsushi Kanehira</a>,
+    <a target="_blank" href="#">Kazuhiro Sasabuchi</a>,
+    <a target="_blank" href="https://www.microsoft.com/en-us/research/people/takamatsujun/" style="color: blue;">Jun Takamatsu</a>,
+    <a target="_blank" href="https://www.microsoft.com/en-us/research/people/katsuike/" style="color: blue;">Katsushi Ikeuchi</a>
+    <br>
+    <a target="_blank" href="https://www.microsoft.com/en-us/research/group/applied-robotics-research/" style="color: blue;">Applied Robotics Research</a>, Microsoft, Redmond
+    <br>
+    <a style="font-size: 20px;">
+      <br> *For inquiries, <br>
+      The use of this work: Katsu Ikeuchi (<a href="mailto:katsuike@microsoft.com">katsuike@microsoft.com</a>)
+      <br>
+      Technical issues: Naoki Wake (<a href="mailto:naoki.wake@microsoft.com">naoki.wake@microsoft.com</a>)
+    </a>
+  </div>
+  <div class="link-buttons">
+    <a href="https://arxiv.org/abs/2408.17422" class="button">
+      <img src="src/arxiv.png" alt="Arxiv" class="button-logo">
+      <span class="button-text">Arxiv Paper</span>
+    </a>
+    <a href="https://github.com/microsoft/VLM-Video-Action-Localization" class="button">
+      <img src="src/github-mark.png" alt="GitHub" class="button-logo">
+      <span class="button-text">Sample Code</span>
+    </a>
+  </div>
+  <img src="src/top-level-schema.jpg" alt="Top Level Schema" style="width: 40%;">
+  <h2>Abstract</h2>
+  <p>Video action localization aims to find timings of a specific action from a long video. Although existing learning-based approaches have been successful, those require annotating videos that come with a considerable labor cost. This paper proposes a learning-free, open-vocabulary approach based on emerging off-the-shelf vision-language models (VLM). The challenge stems from the fact that VLMs are neither designed to process long videos nor tailored for finding actions. We overcome these problems by extending an iterative visual prompting technique. Specifically, we sample video frames into a concatenated image with frame index labels, making a VLM guess a frame that is considered to be closest to the start/end of the action. Iterating this process by narrowing a sampling time window results in finding a specific frame of start and end of an action. We demonstrate that this sampling technique yields reasonable results, illustrating a practical extension of VLMs for understanding videos. </p>
+  <h2>Pipeline</h2>
+  <img src="src/pipeline.jpg" alt="Pipeline" style="width: 50%;">
+  <p>The proposed pipeline for open-vocabulary video action localization using a VLM consists of the following steps: (a) Frames are sampled at regular intervals from a time window, covering the entire video in the first iteration. (b) The sampled frames are then tiled in an image with annotations indicating the time order of the frames. (c) This image is then fed into a VLM to identify the frames closest to a specific timing of an action (e.g., the start timing of an action). (d) The sampling window is updated by centering on the selected frame with a narrower sampling interval. Bottom panel (1) For general action localization, the start time of the action in the video is determined by iterating steps (a) to (d). Bottom panel (2) By estimating the end time of the action in the same manner, the action is localized in the video.</p>
+
+  <h2>Qualitative Results</h2>
+  <p>We qualitatively checked our proposed pipeline using a cooking-preparation video that we recorded in-house. This 10-minute first-person video included actions such as taking out, washing, and cutting vegetables. The figure below shows the examples of the identified video segments for actions of "cutting vegetables,""washing vegetables," and "turning on a faucet," demonstrating that reasonable outputs were obtained.</p>
+  <figure>
+    <img src="src/qualitative_results.jpg" alt="qualitative Results" style="width: 50%;">
+  </figure>
+  <div class="content">
+    <h2>Quantitative Results</h2>
+    <p>The table below compares our proposed method with an existing method [1] on the Breakfast Dataset [2]. While our proposed method does not surpass the latest model-based approaches, this approach demonstrates its feasibility. Importantly, this method offers significant advantages: it eliminates the need for data collection or training and can extract actions specified by open-vocabulary free-text queries, thereby enhancing its adaptability to diverse applications such as video annotation and video editing.</p>
+    <figure>
+      <img src="src/table.jpg" alt="Quantitative Results" style="width: 50%;">
+    </figure>
+    <ul>
+      <li>[1] Hilde Kuehne, Ali Arslan, and Thomas Serre. "The language of actions: Recovering the syntax and semantics of goal-directed human activities." In <i>Proceedings of the IEEE conference on computer vision and pattern recognition</i>, pages 780–787, 2014.</li>
+      <li>[2] Elena Bueno-Benito, Biel Tura Vecino, and Mariella Dimiccoli. "Leveraging triplet loss for unsupervised action segmentation." In <i>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</i>, pages 4922–4930, 2023.</li>
+    </ul>
+  </div>
+</body>
+</html>

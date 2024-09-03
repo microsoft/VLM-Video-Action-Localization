@@ -1,14 +1,40 @@
-# Project
+# VLM-Video-Action-Localization
+This repository provides a sample code of a paper, [Open-vocabulary Temporal Action Localization using VLMs](https://arxiv.org/abs/2408.17422). This paper was authored by the [Applied Robotics Research](https://www.microsoft.com/en-us/research/group/applied-robotics-research/) team.
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+### Overview of the pipeline:
+![Temporal PIVOT pipeline](./src/pipeline.jpg)
 
-As the maintainer of this project, please make a few updates:
+## How to use
+We have confirmed that the sample codes work with python 3.12.1
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Modify the [auth.env](./auth.env)
+
+### If you use Azure OpenAI
+- AZURE_OPENAI_DEPLOYMENT_NAME
+- AZURE_OPENAI_ENDPOINT
+- AZURE_OPENAI_API_KEY
+### If you use OpenAI
+- OPENAI_API_KEY
+
+### Install dependencies
+```bash
+> pip install -r requirements.txt
+```
+
+### Run the sample code
+```bash
+python example.py --credentials auth.env --video sample_video/sample.mp4 --grid 3 --action "Grasping the can"
+```
+The `--grid N` option specifies the number of frames to extract, creating an image with an NxN grid tiling.
+## Bibliography
+```
+@article{wake2024open,
+  title={Open-vocabulary Temporal Action Localization using VLMs},
+  author={Wake, Naoki and Kanehira, Atsushi and Sasabuchi, Kazuhiro and Takamatsu, Jun and Ikeuchi, Katsushi},
+  journal={arXiv preprint arXiv:2408.17422},
+  year={2024}
+}
+```
 
 ## Contributing
 
