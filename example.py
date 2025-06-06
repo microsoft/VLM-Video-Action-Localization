@@ -102,6 +102,7 @@ def scene_understanding(credentials, frame, prompt_message):
             raise Exception("Failed to get response from Azure OpenAI")
         try:
             result = client_gpt4v.chat.completions.create(**params)
+            response_json = extract_json_part(result.choices[0].message.content)
             break
         except openai.BadRequestError as e:
             print(e)
@@ -117,7 +118,12 @@ def scene_understanding(credentials, frame, prompt_message):
             print('APIStatusError. Waiting for 1 second...')
             time.sleep(1)
             count += 1
-    response_json = extract_json_part(result.choices[0].message.content)
+        except Exception as e:
+            print(e)
+            print('Other error. Waiting for 1 second...')
+            time.sleep(1)
+            count += 1
+    
     json_dict = json.loads(response_json, strict=False)
     if len(json_dict['points']) == 0:
         return None
