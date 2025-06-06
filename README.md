@@ -1,5 +1,5 @@
 # VLM-Video-Action-Localization
-This repository provides a sample code of a paper, [Open-vocabulary Temporal Action Localization using VLMs](https://arxiv.org/abs/2408.17422). This paper was authored by the [Applied Robotics Research](https://www.microsoft.com/en-us/research/group/applied-robotics-research/) team.
+This repository provides a sample code of a paper, [Open-vocabulary action localization with iterative visual prompting (IEEE Access)](https://ieeexplore.ieee.org/abstract/document/10942370). This paper was authored by the [Applied Robotics Research](https://www.microsoft.com/en-us/research/group/applied-robotics-research/) team.
 
 ### Overview of the pipeline:
 ![Temporal PIVOT pipeline](./src/pipeline.jpg)
@@ -28,12 +28,15 @@ python example.py --credentials auth.env --video sample_video/sample.mp4 --grid 
 The `--grid N` option specifies the number of frames to extract, creating an image with an NxN grid tiling.
 ## Bibliography
 ```
-@article{wake2024open,
-  title={Open-vocabulary Temporal Action Localization using VLMs},
+@article{wake2025open,
   author={Wake, Naoki and Kanehira, Atsushi and Sasabuchi, Kazuhiro and Takamatsu, Jun and Ikeuchi, Katsushi},
-  journal={arXiv preprint arXiv:2408.17422},
-  year={2024}
-}
+  journal={IEEE Access}, 
+  title={Open-Vocabulary Action Localization With Iterative Visual Prompting}, 
+  year={2025},
+  volume={13},
+  number={},
+  pages={56908--56917},
+  doi={10.1109/ACCESS.2025.3555167}}
 ```
 
 ## Contributing
